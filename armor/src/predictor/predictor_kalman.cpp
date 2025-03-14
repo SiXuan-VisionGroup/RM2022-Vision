@@ -189,7 +189,11 @@ bool PredictorKalman::predict(const cv::Point2f armor_box_points[4], int id, lon
 //	std::cout << " 程序耗时： "<<deltaTime_ms<< " m_yaw: " << yaw_angle<<"yaw角度: " << yaw_angle+mcu_data.curr_yaw/ M_PI * 180 << " pitch角度: " << -pitch_angle <<" "<< -mcu_data.curr_pitch/ M_PI * 180<< " yaw速度: " << yaw_speed << " 距离 " << distance << std::endl;
 
     DebugT(1, 14,"最终解算结果: Yaw:" <<yaw_angle+bind_yaw<< " Pitch:"<<-pitch_angle<< " 目标距离(m):"<<std::left<<setw(10)<<distance);
-    sendTarget(serial, yaw_angle+bind_yaw, -pitch_angle, distance);
+    if(sentry_mode)
+        if(distance > 0.6)  //仅哨兵开启，防止近距离误识别友方
+            sendTarget(serial, yaw_angle+bind_yaw, -pitch_angle, distance); 
+    else
+        sendTarget(serial, yaw_angle+bind_yaw, -pitch_angle, distance); //pitch 可能需要做一次正负转换
 
     DebugT(1, 16, "发送次数"<<time);
     return true;

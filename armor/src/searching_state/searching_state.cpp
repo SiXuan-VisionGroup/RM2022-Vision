@@ -12,7 +12,7 @@ bool ArmorFinder::stateSearching(cv::Mat &src) {
     vector<ArmorObject> temp_objects;
     color = mcu_data.enemy_color;
     if (recv_close){
-        color = 1; // TODO: 应当使用主控板数据
+        color = enemy_color_red; // 默认识别蓝色装甲板，更改颜色详见 option.cpp
     }
     if (armor_finder.detect(input, objects)) { // 前向推理获得目标装甲板
         for (auto armor_object : objects) {

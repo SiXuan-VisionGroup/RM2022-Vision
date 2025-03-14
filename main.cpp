@@ -43,7 +43,7 @@ McuData mcu_data = {
         ARMOR_STATE,    // 当前状态，自瞄-大符-小符
         0,              // 云台角度标记位
         0,              // 是否为反陀螺模式
-        ENEMY_RED,      // 敌方颜色
+        ENEMY_BLUE,     // 敌方颜色，默认识别蓝色
         0,              // 能量机关x轴补偿量
         0,              // 能量机关y轴补偿量
         0,              // 射速
@@ -73,13 +73,14 @@ int main(int argc, char *argv[]) {
     armor_finder.initModel(network_path);
 
     // 如果不能从裁判系统读取颜色则手动设置目标颜色
-   if (!recv_close) // 默认为【红色】装甲板为目标，更改目标装甲板颜色指令请查阅 options.cpp 功能列表
-        mcu_data.enemy_color = ENEMY_RED;
-   else
-       mcu_data.enemy_color = ENEMY_BLUE;
-
-    // 根据条件输入选择视频源 (1、海康相机  0、视频文件)
-    int from_camera = 0;
+    if(recv_close) {
+        if (enemy_color_red) // 默认为蓝色装甲板为目标，更改目标装甲板颜色指令请查阅 options.cpp 功能列表
+            mcu_data.enemy_color = ENEMY_RED;
+        else
+            mcu_data.enemy_color = ENEMY_BLUE;
+    }
+    // 根据条件输入选择视频源
+    int from_camera = cemera_test;
 
     if (from_camera) {
         MVS_cap.Init(); // 初始化海康相机

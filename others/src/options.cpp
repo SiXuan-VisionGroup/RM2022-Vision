@@ -14,7 +14,9 @@ bool show_info = false;        // 仅终端显示目标信息
 bool run_by_frame = false;     // 图像源仅使用视频流
 bool recv_close = false;       // 无下位机控制
 bool armor_predictor = false;  // 目标预测器
-
+bool enemy_color_red = false;  // 识别特定颜色（false-blue，true-red）
+bool cemera_test = true;       // 外部相机测试（false-本地视频测试）
+bool sentry_mode = false;      // 哨兵自瞄模式
 
 // 使用map保存所有选项及其描述和操作，加快查找速度。
 std::map<std::string, std::pair<std::string, void(*)(void)>> options = {
@@ -28,7 +30,16 @@ std::map<std::string, std::pair<std::string, void(*)(void)>> options = {
     }},
     {"--game", {
         "Game mode.", []() {
-            debug_camera=true;
+            debug_camera = true;
+            //enemy_color_red = true; //默认识别蓝色
+            LOGM("Enable Game Mode");
+        }
+    }},
+    {"--game-sentry", {
+        "Game mode but sentry.", []() {
+            debug_camera = true;
+            sentry_mode = true;  //开启距离限制以防止误伤友方
+            //enemy_color_red = true;
             LOGM("Enable Game Mode");
         }
     }},
@@ -61,6 +72,7 @@ std::map<std::string, std::pair<std::string, void(*)(void)>> options = {
             show_armor_box = true;
             armor_predictor = true;
             debug_camera=true;
+            //enemy_color_red = true;   //默认识别蓝色
             LOGM("Enable show armor box with predict, recv close");
         }
     }},

@@ -36,7 +36,7 @@ cmake .. && make
 
 > 运算设备：Intel NUC 11i7
 >
-> 视觉传感器：海康威视 MV-CA016-10UC 160万全局快门彩色工业相机
+> 视觉传感器：海康威视 MV-CS016-10UC 160万全局快门彩色工业相机
 >
 > 程序输入： 1440 X 1080   网络推理输入: 414 X 414 X 3
 >
@@ -48,3 +48,10 @@ cmake .. && make
 务必保证摄像头焦距正确，同时镜片干净无污物。由于使用了网络识别，务必保证光照充足，装甲板图案清晰可见。
 
 光照不足时，调整摄像头曝光或增益数值，直到图案清晰可见。如有需要可针对实际环境情况调整白平衡。
+
+
+## 四、拓展资料
+
+[OpenVINO 2021.4 LTS 及旧版本编译安装方法](https://kekkj123.github.io/posts/OpenVINO_Installation_Guide/)
+
+[Ubuntu 20.04 基于终端的自启动程序](https://kekkj123.github.io/posts/Terminal_Auto_Start/)
